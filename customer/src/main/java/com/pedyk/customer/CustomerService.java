@@ -3,7 +3,8 @@ package com.pedyk.customer;
 import org.springframework.stereotype.Service;
 
 @Service
-public record CustomerService() {
+public record CustomerService(CustomerRepository customerRepository) {
+
     public void registerCustomer(CustomerRegistrationRequest customerRegistrationRequest) {
         Customer customer = Customer.builder()
                 .firstName(customerRegistrationRequest.firstName())
@@ -11,6 +12,6 @@ public record CustomerService() {
                 .email(customerRegistrationRequest.email())
                 .build();
         // todo: check if email valid or not taken,
-        // todo: store customer in DB
+        customerRepository.save(customer);
     }
 }
