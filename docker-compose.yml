@@ -1,13 +1,27 @@
 services:
-  postgres:
-    container_name: postgres
+  postgres-fraud:
+    container_name: postgres-fraud
     image: postgres
     environment:
       POSTGRES_USER: pedyk
       POSTGRES_PASSWORD: password
-      PGDATA: /data/postgres
+#      PGDATA: /data/postgres
     volumes:
-      - postgres:/data/postgres
+      - postgres-fraud:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  postgres-customer:
+    container_name: postgres-customer
+    image: postgres
+    environment:
+      POSTGRES_USER: pedyk
+      POSTGRES_PASSWORD: password
+#      PGDATA: /data/postgres
+    volumes:
+      - postgres-customer:/data/postgres
     ports:
       - "5432:5432"
     networks:
@@ -33,5 +47,6 @@ networks:
     driver: bridge
 
 volumes:
-  postgres:
+  postgres-fraud:
+  postgres-customer:
   pgadmin:
