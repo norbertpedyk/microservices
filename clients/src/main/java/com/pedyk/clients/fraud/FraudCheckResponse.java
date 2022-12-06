@@ -1,4 +1,4 @@
-package com.pedyk.fraud;
+package com.pedyk.clients.fraud;
 
 public record FraudCheckResponse(Boolean isFraudster) {
 }
