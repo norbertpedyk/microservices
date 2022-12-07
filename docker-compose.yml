@@ -1,11 +1,25 @@
 services:
+  postgres-notification:
+    container_name: postgres-notification
+    image: postgres
+    environment:
+      POSTGRES_USER: pedyk
+      POSTGRES_PASSWORD: password
+    #      PGDATA: /data/postgres
+    volumes:
+      - postgres-notification:/data/postgres
+    ports:
+      - "5434:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
   postgres-fraud:
     container_name: postgres-fraud
     image: postgres
     environment:
       POSTGRES_USER: pedyk
       POSTGRES_PASSWORD: password
-#      PGDATA: /data/postgres
+    #      PGDATA: /data/postgres
     volumes:
       - postgres-fraud:/data/postgres
     ports:
@@ -19,7 +33,7 @@ services:
     environment:
       POSTGRES_USER: pedyk
       POSTGRES_PASSWORD: password
-#      PGDATA: /data/postgres
+    #      PGDATA: /data/postgres
     volumes:
       - postgres-customer:/data/postgres
     ports:
@@ -41,7 +55,19 @@ services:
     networks:
       - postgres
     restart: unless-stopped
-  
+
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+  rabbitmq:
+    image: rabbitmq:3.9.11-management-alpine
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
 networks:
   postgres:
     driver: bridge
@@ -49,4 +75,5 @@ networks:
 volumes:
   postgres-fraud:
   postgres-customer:
+  postgres-notification:
   pgadmin:

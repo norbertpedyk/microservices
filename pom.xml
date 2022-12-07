@@ -13,6 +13,9 @@
         <module>fraud</module>
         <module>eureka-server</module>
         <module>clients</module>
+        <module>notification</module>
+        <module>apigw</module>
+        <module>amqp</module>
     </modules>
 
     <name>microservices</name>
